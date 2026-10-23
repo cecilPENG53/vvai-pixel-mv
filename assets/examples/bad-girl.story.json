@@ -1,0 +1,107 @@
+{
+ "title": "坏女孩",
+ "dur": 59.611,
+ "look": "base",
+ "intensity": "dj",
+ "character": null,
+ "cast": {
+  "claude": { "kind": "claude", "note": "我：不珍惜，后来才觉悟" },
+  "girl": { "kind": "girl", "note": "她：被放手、哭过、后来有了别人" },
+  "rival": { "kind": "rival", "note": "新男友" }
+ },
+ "segments": [
+  { "t0": 0, "t1": 8.62, "scene": "station", "time": "dusk",
+    "actors": [
+     { "id": "claude", "act": "walk", "face": 1, "hold": "girl", "path": [[0, 112], [3.87, 112], [5.4, -60]] },
+     { "id": "girl", "act": "walk", "x": 146, "face": -1 }
+    ],
+    "beats": [
+     { "do": "hands-break", "who": "claude", "t": 2.91 },
+     { "do": "eyes", "who": "claude", "t": 2.91, "dur": 0.76, "value": "closed" },
+     { "do": "eyes", "who": "girl", "t": 2.91, "dur": 0.6, "value": "scared" },
+     { "do": "turn", "who": "claude", "t": 3.67 },
+     { "do": "glance", "who": "girl", "t": 3.67, "dur": 1.8, "value": -1 },
+     { "do": "cry", "who": "girl", "t": 5.47 }
+    ],
+    "camKeys": [[0, { "cx": 146, "cy": 96, "z": 2.4 }], [1.8, { "cx": 150, "cy": 94, "z": 1.6 }], [2.6, { "cx": 150, "cy": 95, "z": 1.25 }], [5.47, { "cx": 140, "cy": 95, "z": 1.15 }], [8.4, { "cx": 162, "cy": 102, "z": 1.7 }]] },
+
+  { "t0": 8.62, "t1": 16.4, "scene": "club", "trans": "train", "crowd": true,
+    "actors": [ { "id": "claude", "act": "dance", "x": 138, "props": ["glasses"] } ],
+    "beats": [
+     { "do": "memory", "t": 12.6, "until": 15.12, "at": [82, 62], "show": "girl", "prop": "scarf" },
+     { "do": "wave", "who": "claude", "t": 15.0, "dur": 0.35 }
+    ],
+    "camKeys": [[8.62, { "cx": 160, "cy": 100, "z": 1.05 }], [12.6, { "cx": 160, "cy": 100, "z": 1.05 }], [13.6, { "cx": 125, "cy": 95, "z": 1.12 }]] },
+
+  { "t0": 16.4, "t1": 19.9, "scene": "rainstreet", "weather": "rain", "trans": "pixel",
+    "actors": [
+     { "id": "girl", "act": "walk", "face": 1, "props": ["umbrella"], "path": [[16.4, 190], [18.1, 248]], "cellTo": 2.2 },
+     { "id": "claude", "act": "walk", "props": ["glasses"], "show": [18.3, 19.9], "path": [[18.3, -40], [19.3, 205]] }
+    ],
+    "beats": [
+     { "do": "fade", "who": "girl", "t": 17.2, "dur": 0.9 },
+     { "do": "drop-umbrella", "who": "girl", "t": 18.1 },
+     { "do": "eyes", "who": "claude", "t": 19.3, "dur": 1, "value": "closed" }
+    ],
+    "camKeys": [[16.4, { "cx": 170, "cy": 100, "z": 1.1 }], [19.9, { "cx": 170, "cy": 100, "z": 1.18 }]] },
+
+  { "t0": 19.9, "t1": 23.31, "scene": "calllog", "trans": "whip", "zoomAt": [160, 80],
+    "actors": [ { "id": "claude", "act": "type", "props": ["glasses"] } ],
+    "labels": [ { "text": "最近通话 · 没有记录", "at": [110, 24], "size": 5.5, "show": [19.9, 22.85] } ],
+    "cam": "wide" },
+
+  { "t0": 23.31, "t1": 45.74, "scene": "club", "trans": "zoom", "crowd": true,
+    "actors": [
+     { "id": "claude", "act": "hop", "props": ["glasses"], "path": [[23.31, -30], [25.2, 110]] },
+     { "id": "girl", "act": "hop", "face": -1, "path": [[23.31, 222], [33.67, 222], [34.07, 232], [42.3, 232], [43.8, 372]] },
+     { "id": "rival", "act": "hop", "face": -1, "show": [33.0, 45.74], "path": [[33.0, 330], [33.67, 262], [42.3, 262], [43.8, 402]] }
+    ],
+    "beats": [
+     { "do": "spotlight", "who": "girl", "t": 27.42, "dur": 15.6 },
+     { "do": "wave", "who": "claude", "t": 28.97, "dur": 0.8 },
+     { "do": "eyes", "who": "girl", "t": 30.07, "dur": 7.2, "value": "happy" },
+     { "do": "sparkle", "who": "girl", "t": 30.07, "dur": 12 },
+     { "do": "heart", "who": "claude", "t": 29.97, "dur": 6.5 },
+     { "do": "turn", "who": "girl", "t": 33.67 },
+     { "do": "eyes", "who": "rival", "t": 33.67, "dur": 12, "value": "happy" },
+     { "do": "heart-crack", "who": "claude", "t": 33.855 },
+     { "do": "eyes", "who": "claude", "t": 34.5, "dur": 11.3, "value": "closed" },
+     { "do": "eyes", "who": "girl", "t": 37.3, "dur": 3.47, "value": "liner" },
+     { "do": "glance", "who": "girl", "t": 40.77, "dur": 0.8, "value": -2 },
+     { "do": "puff", "who": "girl", "t": 41.48, "target": "claude" },
+     { "do": "eyes", "who": "girl", "t": 41.75, "dur": 3, "value": "closed" },
+     { "do": "crowd-out", "t": 42.0, "dur": 1.0 },
+     { "do": "lights-off", "t": 43.0, "dur": 1.6 },
+     { "do": "spotlight", "who": "claude", "t": 44.0, "dur": 1.74 }
+    ],
+    "camKeys": [[23.31, { "cx": 120, "cy": 100, "z": 1.6 }], [24.2, { "cx": 150, "cy": 100, "z": 1.05 }], [27.42, { "cx": 160, "cy": 100, "z": 1.1 }], [33.67, { "cx": 180, "cy": 100, "z": 1.25 }], [37.3, { "cx": 180, "cy": 100, "z": 1.25 }], [37.8, { "cx": 248, "cy": 132, "z": 3.4 }], [40.77, { "cx": 248, "cy": 132, "z": 3.4 }], [41.17, { "cx": 175, "cy": 104, "z": 1.45 }], [42.0, { "cx": 175, "cy": 104, "z": 1.45 }], [44.5, { "cx": 128, "cy": 112, "z": 1.7 }], [45.74, { "cx": 128, "cy": 112, "z": 1.8 }]] },
+
+  { "t0": 45.74, "t1": 55.38, "frame": "desktop", "trans": "iris",
+    "windows": [
+     { "id": "A", "title": "她 · 现在", "rect": [110, 150, 820, 500], "show": [45.74, 48.7], "toDock": 48.2, "scene": "park", "time": "dusk", "weather": "petals",
+       "actors": [ { "id": "girl", "act": "sit", "x": 124, "y": 139, "face": 1, "eyes": "happy" }, { "id": "rival", "act": "sit", "x": 150, "y": 139, "face": -1, "eyes": "happy" } ],
+       "beats": [ { "do": "heart", "who": "rival", "t": 45.74 } ] },
+     { "id": "B", "title": "我 · 现在", "rect": [990, 150, 820, 500], "rectTo": [200, 70, 1520, 890], "move": [48.2, 48.7], "show": [45.74, 55.5], "scene": "bedroom", "weather": "rain",
+       "actors": [ { "id": "claude", "act": "window", "x": 205, "y": 106, "props": ["glasses", "phone"] } ],
+       "beats": [ { "do": "glasses-off", "who": "claude", "t": 52.48 }, { "do": "scarf-out", "who": "claude", "t": 53.7 } ] }
+    ] },
+
+  { "t0": 55.38, "t1": 59.611, "frame": "desktop", "trans": "pixel", "scene": "station",
+    "windows": [
+     { "id": "C", "title": "回忆 · 那天的站台", "rect": [260, 90, 1400, 840], "show": [55.38, 60], "scene": "station", "time": "dusk",
+       "actors": [ { "id": "claude", "act": "idle", "x": 118, "y": 120, "face": 1 }, { "id": "girl", "act": "idle", "x": 170, "y": 120, "face": -1, "alpha": 0.6, "eyes": "closed" } ],
+       "beats": [ { "do": "scarf-out", "who": "claude", "t": 55.38 }, { "do": "reach", "who": "claude", "t": 55.65 }, { "do": "dissolve", "who": "girl", "t": 56.25 } ] }
+    ] }
+ ],
+ "lines": {
+  "1": { "exit": "shatter" }, "2": { "exit": "drift", "dir": -1 }, "3": { "exit": "drip", "out": 8.0 },
+  "4": { "enter": "bounce" }, "5": { "enter": "bounce" }, "6": { "mode": "memory", "exit": "scatter", "out": 15.12 },
+  "7": { "exit": "recede" }, "8": { "exit": "wash", "out": 19.55 }, "9": { "mode": "type", "out": 22.8 },
+  "10": { "enter": "bounce" }, "11": { "enter": "bounce" }, "12": { "enter": "spot" }, "21": { "mode": "say", "who": "claude" },
+  "13": { "enter": "sparkle" }, "14": { "mode": "behind", "exit": "shatter" }, "15": { "enter": "swipe" },
+  "16": { "exit": "blown", "out": 41.58 }, "17": { "mode": "split" }, "18": { "mode": "glass", "win": "B", "at": [225, 64] },
+  "19": { "enter": "lift" }, "20": { "exit": "dissolve", "out": 56.9 }
+ },
+ "events": [ { "t": 1.788, "type": "drop" }, { "t": 27.42, "type": "react", "who": "claude" }, { "t": 45.743, "type": "drop" } ],
+ "outro": { "t0": 57.21 }
+}

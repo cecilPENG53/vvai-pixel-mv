@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>__TITLE__ · 像素 MV</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script src="assets/mvdata.js"></script>
+    <script src="assets/lyrics.js"></script>
+    <script src="assets/story.js"></script>
+    <script src="assets/scenes-data.js"></script>
+    <style>
+      @font-face { font-family: "MVSerif"; src: url("assets/fonts/NotoSerifSC-VF.ttf"); font-weight: 200 900; }
+      @font-face { font-family: "MVSans"; src: url("assets/fonts/NotoSansSC-VF.ttf"); font-weight: 100 900; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: #000; }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: "MVSans", sans-serif; color: #fbf8ff; }
+      canvas.full { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; image-rendering: pixelated; }
+      .layer { position: absolute; inset: 0; pointer-events: none; }
+
+      /* lyrics: band / type / say / memory / behind / glass / split */
+      .kline { position: absolute; left: 0; top: 0; display: flex; align-items: center; white-space: nowrap; opacity: 0; font-family: "MVSerif", serif; font-weight: 900; transform-origin: 50% 50%; }
+      .kline .c { display: inline-block; opacity: 0; }
+      .kline.type { font-weight: 800; overflow: hidden; }
+      .kline.type .cur { display: inline-block; width: 0.42em; height: 0.9em; margin-left: 0.08em; background: currentColor; }
+      .bubble { position: absolute; left: 0; top: 0; padding: 14px 26px; border-radius: 26px; background: #fbf8ff; color: #2a1830; font-family: "MVSans", sans-serif; font-weight: 900; font-size: 44px; white-space: nowrap; opacity: 0; transform-origin: 50% 100%; }
+      .bubble::after { content: ""; position: absolute; left: 50%; bottom: -18px; margin-left: -12px; border: 12px solid transparent; border-top: 14px solid #fbf8ff; border-bottom: 0; }
+      .bubble .c { display: inline-block; opacity: 0; }
+      .label { position: absolute; left: 0; top: 0; font-family: "MVSans", sans-serif; font-weight: 700; white-space: nowrap; opacity: 0; }
+
+      .qm { position: absolute; left: 0; top: 0; font-family: "MVSans", sans-serif; font-weight: 900; font-size: 84px; color: #ffd34d; -webkit-text-stroke: 5px #2a1a10; paint-order: stroke fill; opacity: 0; }
+      .gbar { position: absolute; left: 0; width: 1920px; height: 20px; mix-blend-mode: screen; opacity: 0; }
+      #tint { position: absolute; inset: 0; pointer-events: none; mix-blend-mode: screen; opacity: 0; }
+      #scan { position: absolute; inset: 0; pointer-events: none; background: repeating-linear-gradient(0deg, rgba(0,0,0,0.4) 0 2px, transparent 2px 5px); opacity: 0; }
+      #vig { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse at center, transparent 55%, rgba(5,4,15,0.55) 100%); }
+      #flash { position: absolute; inset: 0; background: #fff; opacity: 0; pointer-events: none; }
+      #fade { position: absolute; inset: 0; background: #000; opacity: 0; pointer-events: none; }
+
+      /* looks */
+      .lookfx { position: absolute; inset: 0; pointer-events: none; }
+      .lookfx.neon { background: repeating-linear-gradient(0deg, rgba(0,0,0,0.22) 0 3px, transparent 3px 6px); }
+      .lookfx.classic { background: radial-gradient(ellipse at 30% 20%, rgba(255,240,210,0.16), transparent 60%), repeating-linear-gradient(90deg, rgba(120,90,50,0.05) 0 1px, transparent 1px 3px); mix-blend-mode: multiply; }
+      .lookfx.retro { background: radial-gradient(ellipse at center, transparent 50%, rgba(30,15,0,0.55) 100%); }
+
+      /* desktop frame: scenes play inside windows on a full computer desktop */
+      #desk { position: absolute; inset: 0; opacity: 0; transform-origin: 960px 540px; background: radial-gradient(120% 90% at 70% 10%, #2a2160 0%, #151236 45%, #0b0a1d 100%); }
+      #deskMenu { position: absolute; left: 0; top: 0; width: 1920px; height: 38px; background: rgba(10, 8, 28, 0.6); display: flex; align-items: center; justify-content: space-between; padding: 0 22px; font-size: 18px; color: #e6e3f3; }
+      #deskMenu b { margin-right: 30px; } #deskMenu span { margin-right: 26px; }
+      #deskDock { position: absolute; left: 50%; bottom: 14px; margin-left: -420px; width: 840px; height: 92px; border-radius: 26px; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.18); display: flex; align-items: center; justify-content: center; gap: 14px; }
+      .ico { width: 66px; height: 66px; border-radius: 16px; display: grid; place-items: center; font-size: 30px; color: #fff; }
+      .win5 { position: absolute; left: 0; top: 0; border-radius: 16px; overflow: hidden; background: #17161d; border: 1px solid rgba(255,255,255,0.16); box-shadow: 0 30px 90px rgba(0,0,0,0.6); opacity: 0; }
+      .win5 .tb { position: absolute; left: 0; top: 0; right: 0; height: 40px; background: #222129; display: flex; align-items: center; padding-left: 16px; gap: 8px; }
+      .win5 .tb i { width: 13px; height: 13px; border-radius: 50%; display: block; }
+      .win5 .tb span { position: absolute; left: 0; right: 0; text-align: center; font-size: 17px; color: #b9b5c9; }
+      .win5 canvas { position: absolute; left: 0; top: 40px; width: 100%; height: calc(100% - 40px); image-rendering: pixelated; }
+
+      /* title card */
+      #title { position: absolute; inset: 0; opacity: 0; pointer-events: none; background: radial-gradient(ellipse at 50% 52%, rgba(10,8,30,0.82) 0%, rgba(10,8,30,0.55) 45%, rgba(10,8,30,0.25) 100%); }
+      #ring { position: absolute; left: 960px; top: 540px; width: 1400px; height: 1400px; margin: -700px 0 0 -700px; border-radius: 50%; border: 8px dashed rgba(255,170,210,0.85); }
+      #ttl { position: absolute; left: 0; top: 420px; width: 1920px; text-align: center; font-family: "MVSerif", serif; font-weight: 900; font-size: 200px; letter-spacing: 10px;
+        text-shadow: 0 2px 0 #ff9cc0, 0 4px 0 #ff7ab0, 0 6px 0 #e85d95, 0 8px 0 #c94a80, 0 10px 0 #a83a6b, 0 16px 34px rgba(0,0,0,0.6); }
+      #sub { position: absolute; left: 0; top: 700px; width: 1920px; text-align: center; font-size: 30px; letter-spacing: 12px; color: #d8cff5; opacity: 0; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="__DUR__" data-width="1920" data-height="1080">
+      <canvas class="full" id="stage" width="1920" height="1080"></canvas>
+      <div class="layer" id="lyrBehind"></div>
+      <canvas class="full" id="front" width="1920" height="1080"></canvas>
+      <div id="desk">
+        <div id="deskMenu"><div><b>✻ Claude Code</b><span>文件</span><span>编辑</span><span>显示</span><span>窗口</span><span>帮助</span></div><div>10月20日 周一 03:12</div></div>
+        <div id="deskDock">
+          <div class="ico" style="background:linear-gradient(160deg,#6fb7ff,#2f6fe0)">☺</div><div class="ico" style="background:linear-gradient(160deg,#58d6ff,#1c8ef0)">◎</div>
+          <div class="ico" style="background:linear-gradient(160deg,#6be27b,#24b14a)">✉</div><div class="ico" style="background:linear-gradient(160deg,#ff8fb1,#e8577f)">♥</div>
+          <div class="ico" style="background:linear-gradient(160deg,#ffe07a,#f2b632);color:#6a4a00">✎</div><div class="ico" style="background:#1d1d22;border:1px solid #555">&gt;_</div>
+          <div class="ico" style="background:linear-gradient(160deg,#e48b6c,#c4603f)">✻</div>
+        </div>
+      </div>
+      <div class="lookfx" id="lookfx"></div>
+      <div class="layer" id="labels"></div>
+      <div id="vig"></div>
+      <div id="title"><div id="ring"></div><div id="ttl"></div><div id="sub">CLAUDE MV · PIXEL</div></div>
+      <div class="layer" id="lyr"></div>
+      <canvas class="full" id="speed" width="1920" height="1080"></canvas>
+      <div class="layer" id="qms"></div>
+      <div id="tint"></div>
+      <div id="scan"></div>
+      <div class="layer" id="gbars"></div>
+      <canvas class="full" id="fx" width="1920" height="1080"></canvas>
+      <div id="flash"></div>
+      <div id="fade"></div>
+      <audio id="bgm" src="assets/bgm.mp3" data-start="0" data-duration="__DUR__" data-track-index="10" data-volume="1"></audio>
+    </div>
+    <script src="assets/engine.js"></script>
+    <script>
+      document.fonts.ready.then(() => {
+        const tl = window.__mvBuild();
+        (window.__mvReady || Promise.resolve()).then(() => {
+          window.__timelines["main"] = tl;
+          if (window.__hfForceTimelineRebind) window.__hfForceTimelineRebind();
+        });
+      });
+    </script>
+  </body>
+</html>
